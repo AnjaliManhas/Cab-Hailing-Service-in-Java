@@ -1,4 +1,6 @@
 package com.company;
+import com.MySQLAccess;
+
 import java.io.*;
 import java.util.*;
 import java.text.*;
@@ -12,8 +14,9 @@ public class Application {
     static Map<UUID, com.company.Booking>bookingMap = new HashMap<>();
     static UserService userService = new UserService();
     static com.company.BookingService bookingService = new com.company.BookingService();
+    static MySQLAccess mySQLAccess= new MySQLAccess();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         System.out.println("****************Diamond Cab Service***************");
         Driver driver;
         User user = null;
@@ -28,6 +31,7 @@ public class Application {
                 case 1: {
                     driver = driverService.getDriverDetails();
                     driverMap.put(driver.getCarNumber(), driver);
+                    mySQLAccess.writeDriverDetailsInDatabase( driver.getDriverId(), driver.getDriverName(), driver.getDriverPhoneNumber(),driver.getCarNumber(), driver.getCarName(), driver.getCarColor(), driver.getLatitude(), driver.getLongitude());
                     break;
                 }
                 case 2: {
